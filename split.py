@@ -18,7 +18,7 @@ args_parser.add_argument(
 )
 args = args_parser.parse_args()
 
-cur_dir = os.path.dirname(sys.argv[0])
+cur_dir = os.path.dirname(__file__)
 lib_name = 'httplib'
 header_name = '/' + lib_name + '.h'
 source_name = '/' + lib_name + '.' + args.extension
