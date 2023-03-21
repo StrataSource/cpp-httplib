@@ -50,6 +50,7 @@ if do_split:
     in_implementation = False
     cc_out = args.out + source_name
     with open(h_out, 'w') as fh, open(cc_out, 'w') as fc:
+        fc.write('#define CPPHTTPLIB_IMPL\n')
         fc.write('#include "httplib.h"\n')
         fc.write('namespace httplib {\n')
         for line in lines:

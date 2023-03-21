@@ -224,7 +224,7 @@ using socket_t = int;
 #include <sys/stat.h>
 #include <thread>
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+#if defined(CPPHTTPLIB_OPENSSL_SUPPORT) && defined(CPPHTTPLIB_IMPL)
 #ifdef _WIN32
 #include <wincrypt.h>
 
@@ -264,6 +264,7 @@ using socket_t = int;
 
 #endif
 
+#ifdef CPPHTTPLIB_IMPL
 #ifdef CPPHTTPLIB_ZLIB_SUPPORT
 #include <zlib.h>
 #endif
@@ -271,6 +272,15 @@ using socket_t = int;
 #ifdef CPPHTTPLIB_BROTLI_SUPPORT
 #include <brotli/decode.h>
 #include <brotli/encode.h>
+#endif
+#endif
+
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+typedef struct ssl_st SSL;
+typedef struct ssl_ctx_st SSL_CTX;
+typedef struct x509_st X509;
+typedef struct x509_store_st X509_STORE;
+typedef struct evp_pkey_st EVP_PKEY;
 #endif
 
 /*
@@ -8759,7 +8769,7 @@ inline SSL_CTX *Client::ssl_context() const {
 
 } // namespace httplib
 
-#if defined(_WIN32) && defined(CPPHTTPLIB_USE_POLL)
+#if defined(_WIN32) && defined(CPPHTTPLIB_USE_POLL) && !defined(CPPHTTPLIB_IMPL)
 #undef poll
 #endif
 
